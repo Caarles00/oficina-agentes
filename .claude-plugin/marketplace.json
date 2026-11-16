@@ -1,0 +1,5 @@
+{
+  "name": "oficina-agentes",
+  "owner": { "name": "Caarles00" },
+  "plugins": [{ "name": "oficina-agentes", "source": "./" }]
+}
