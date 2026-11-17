@@ -35,6 +35,6 @@ En la app de escritorio, donde `/plugin` no funciona: pulsa + junto al cuadro de
 | `/oficina paleta cálida\|pastel\|retro\|neón` | Cambia la paleta de colores |
 | `/oficina luz auto\|día\|tarde\|noche` | Fija la luz o la deja según la hora |
 
-La oficina se abre sola cuando se lanza el primer subagente. Mientras hay agentes trabajando aparece un botón encima del cuadro de texto para abrirla o cerrarla.
+La oficina se abre sola cuando se lanza el primer subagente. Encima del cuadro de texto hay siempre un botón para abrirla o cerrarla; mientras hay agentes trabajando indica cuántos son.
 
 Se ve mejor con el terminal en pantalla completa, donde el panel se acopla junto al chat. Necesita al menos 56 columnas; con menos, muestra solo la lista de agentes.

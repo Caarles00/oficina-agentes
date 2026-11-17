@@ -1,6 +1,6 @@
 {
   "name": "oficina-agentes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Una oficina en pixel art donde se ve a los agentes entrar, trabajar, hablar entre ellos e irse",
   "types": "./types/index.d.ts"
 }

@@ -102,9 +102,9 @@ test('el botón de encima del cuadro de texto abre y cierra la oficina', async (
     props: { hasSurvey: false, bodyColumns: 80 },
   } as never
 
-  // Sin agentes trabajando, no hay botón
+  // Sin agentes trabajando el botón sigue ahí
   const empty = await $.ui.mount(BAND)
-  expect(await empty.find({ type: 'Button', key: 'oficina' })).toBeUndefined()
+  expect(await empty.find({ type: 'Button', key: 'oficina' })).toBeDefined()
   await empty.unmount()
 
   await $.agent.spawn({ prompt: 'mira', description: 'Buscar', subagentType: 'Explore' } as never)
@@ -121,5 +121,27 @@ test('el botón de encima del cuadro de texto abre y cierra la oficina', async (
   expect(closed).toBe(1)
   await ui.press({ key: 'oficina' })
   expect(opened).toBe(1)
+  await ui.unmount()
+})
+
+test('el botón abre la oficina aunque no haya ningún agente trabajando', async ($, on) => {
+  on('command.register', () => ({ value: { command: 'oficina' } }))
+  on('session.start', (_, e) => ({ cwd: e.cwd }))
+  on('store.get', () => ({ value: undefined }))
+  let opened = 0
+  let closed = 0
+  on('ui.open', () => (opened++, { value: { isPlaced: true } }))
+  on('ui.close', () => (closed++, { value: undefined }))
+  await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
+  const ui = await $.ui.mount({
+    plugin: 'oficina-agentes',
+    component: 'AbovePrompt',
+    surface: 'terminal',
+    props: { hasSurvey: false, bodyColumns: 80 },
+  } as never)
+  await ui.press({ key: 'oficina' })
+  expect(opened).toBe(1)
+  await ui.press({ key: 'oficina' })
+  expect(closed).toBe(1)
   await ui.unmount()
 })

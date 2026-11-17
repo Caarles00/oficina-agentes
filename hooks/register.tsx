@@ -1828,21 +1828,23 @@ export const register: Register = (on) => {
     const open = await read($, isOpen)
     const list = (await read($, roster)) as OfficeAgent[]
     const working = list.filter((a) => a.id !== MAIN && a.status === 'working').length
-    // Solo cuando hay agentes trabajando; si no, la línea queda libre
-    if (working === 0) return next(e)
     const { Box, Button, Text } = $.ui.resolve(e)
+    // El botón está siempre, para abrir la oficina cuando se quiera; solo destaca y lleva
+    // contador mientras hay agentes trabajando.
     return (
       <Box>
         <Button
           key="oficina"
           label={open ? 'Cerrar oficina' : 'Abrir oficina'}
-          variant={open ? undefined : 'primary'}
+          variant={!open && working > 0 ? 'primary' : undefined}
           onPress={() => toggleOffice($ as unknown as Dollar)}
         />
-        <Text dimColor>
-          {' '}
-          {`${working} ${working === 1 ? 'agente trabajando' : 'agentes trabajando'}`}
-        </Text>
+        {working > 0 ? (
+          <Text dimColor>
+            {' '}
+            {`${working} ${working === 1 ? 'agente trabajando' : 'agentes trabajando'}`}
+          </Text>
+        ) : null}
       </Box>
     )
   })
